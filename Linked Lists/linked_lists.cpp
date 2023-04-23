@@ -131,6 +131,16 @@ public:
         }
     }
 
+    void pop()
+    {
+        remove(getNodeSize() - 1);
+    }
+
+    void push(MyNode *node)
+    {
+        insert(getNodeSize(), node);
+    }
+
     MyNode get(int index)
     {
         int nodeSize = getNodeSize();
@@ -146,6 +156,40 @@ public:
         }
         return *offset;
     }
+
+    int indexOf(int value)
+    {
+        int nodeSize = getNodeSize();
+        MyNode *offset = &nodeInstance_0;
+
+        for (int i = 0; i < nodeSize - 1; i++)
+        {
+            if (value == (*offset).index)
+            {
+                return i;
+            }
+            offset = (*offset).next;
+        }
+
+        return -1;
+    }
+
+    bool contains(int value)
+    {
+        int nodeSize = getNodeSize();
+        MyNode *offset = &nodeInstance_0;
+
+        for (int i = 0; i < nodeSize - 1; i++)
+        {
+            if (value == (*offset).index)
+            {
+                return true;
+            }
+            offset = (*offset).next;
+        }
+
+        return false;
+    }
 };
 
 int main()
@@ -159,7 +203,8 @@ int main()
          << endl;
 
     // INSERT NEW NODE TO THE END
-    myLinkedList.addNewNode();
+    // myLinkedList.addNewNode();
+    myLinkedList.push(new MyNode(444));
     nodeSize = myLinkedList.getNodeSize();
     cout << "INSERT NEW NODE TO THE END" << endl;
     cout << "List length: " << nodeSize << endl;
@@ -181,14 +226,39 @@ int main()
     cout << "List length before deletion: " << nodeSize << endl;
     cout << "4th item's value before deletion: " << myLinkedList.get(4).index << endl;
     cout << "5th item's value before deletion: " << myLinkedList.get(5).index << endl;
-    cout << "6th item's value before deletion: " << myLinkedList.get(6).index << endl
-         << endl;
+    cout << "6th item's value before deletion: " << myLinkedList.get(6).index << endl;
+
     myLinkedList.remove(5);
     nodeSize = myLinkedList.getNodeSize();
     cout << "List length after deletion: " << nodeSize << endl;
     cout << "4th item's value after deletion: " << myLinkedList.get(4).index << endl;
     cout << "5th item's value after deletion: " << myLinkedList.get(5).index << endl;
     cout << "6th item's value after deletion: " << myLinkedList.get(6).index << endl
+         << endl;
+
+    // REMOVE THE LAST NODE
+    nodeSize = myLinkedList.getNodeSize();
+    cout << "REMOVE THE LAST NODE" << endl;
+    cout << "List length before deletion: " << nodeSize << endl;
+    cout << "Last item's value before deletion: " << myLinkedList.get((nodeSize - 1)).index << endl;
+
+    myLinkedList.pop();
+    nodeSize = myLinkedList.getNodeSize();
+    cout << "List length after deletion: " << nodeSize << endl;
+    cout << "Last item's value after deletion: " << myLinkedList.get((nodeSize - 1)).index << endl
+         << endl;
+
+    // INDEX OF THE NODE WHOSE VALUE IS '31'
+    int indexOf31 = myLinkedList.indexOf(31);
+    cout << "INDEX OF THE NODE WHOSE VALUE IS '31'" << endl;
+    cout << indexOf31 << endl;
+    cout << "Checking if it's correct: " << myLinkedList.get(indexOf31).index << endl
+         << endl;
+
+    // CHECK IF THE LIST CONTAINS A CERTAIN ELEMENT
+    cout << "CHECK IF THE LIST CONTAINS A CERTAIN ELEMENT" << endl;
+    cout << "CONTAINS '31': " << (myLinkedList.contains(31) ? "TRUE" : "FALSE") << endl;
+    cout << "CONTAINS '75': " << (myLinkedList.contains(75) ? "TRUE" : "FALSE") << endl
          << endl;
 
     return 0;
