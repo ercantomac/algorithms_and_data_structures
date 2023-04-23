@@ -60,7 +60,7 @@ int *divide(int list[], int length)
 
 int main()
 {
-    int array[10] = {23, 80, 756, 2, 99, 1083, 564, 81, 58, 326};
+    int array[10] = {23, 80, 756, 2, 99, 1083, 564, 58, 326, 99};
     int *result = divide(array, 10);
     for (int i = 0; i < 10; i++)
     {
