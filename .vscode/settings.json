@@ -1,6 +1,11 @@
 {
     "files.associations": {
         "xlocale": "cpp",
-        "xstring": "cpp"
+        "xstring": "cpp",
+        "tuple": "cpp",
+        "utility": "cpp",
+        "cmath": "cpp",
+        "iostream": "cpp",
+        "ostream": "cpp"
     }
 }
