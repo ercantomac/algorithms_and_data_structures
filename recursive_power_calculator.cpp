@@ -37,7 +37,8 @@ double power(int x, int n)
 void displayPower(int x, int n, double expectedResult)
 {
     double result = power(x, n);
-    cout << x << " to the " << n << " is " << result << " (" << (result == expectedResult ? "TRUE" : "FALSE") << ")" << endl;
+    cout << x << " to the " << n << " is " << result << " (" << (result == expectedResult ? "TRUE" : "FALSE") << ")" << endl
+         << endl;
 }
 
 int main()
