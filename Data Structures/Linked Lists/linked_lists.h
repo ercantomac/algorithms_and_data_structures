@@ -46,13 +46,14 @@ public:
         return cnt;
     }
 
-    void insert(int index, int value)
+    bool insert(int index, int value)
     {
         MyNode *node = new MyNode(value);
         int nodeSize = getNodeSize();
-        if (index > nodeSize)
+        if (index > nodeSize || index < 0)
         {
-            index = nodeSize;
+            // index = nodeSize;
+            return false;
         }
 
         // IF index == nodeSize, IT ADDS THE NEW NODE TO THE END (SAME AS addNewNode())
@@ -74,28 +75,32 @@ public:
         {
             (*node).next = headNode;
             headNode = node;
+
+            return true;
         }
-        else
+        MyNode *offset = headNode;
+        for (int i = 0; i < index; i++)
         {
-            MyNode *offset = headNode;
-            for (int i = 0; i < index; i++)
+            if (i == (index - 1))
             {
-                if (i == (index - 1))
-                {
-                    (*node).next = (*offset).next;
-                    (*offset).next = node;
-                }
-                else
-                {
-                    offset = (*offset).next;
-                }
+                (*node).next = (*offset).next;
+                (*offset).next = node;
+            }
+            else
+            {
+                offset = (*offset).next;
             }
         }
+        return true;
     }
 
-    void removeAt(int index)
+    bool removeAt(int index)
     {
         int nodeSize = getNodeSize();
+        if (nodeSize == 0 || index >= nodeSize || index < 0)
+        {
+            return false;
+        }
         if (index == 0)
         {
             MyNode *newFirst = (*headNode).next;
@@ -104,52 +109,56 @@ public:
             delete temp; // I AM DOING THIS TO DEALLOCATE THE MEMORY OF THE REMOVED NODE, BUT I AM NOT SURE IF IT WORKS
 
             headNode = newFirst;
+
+            return true;
         }
-        else
+        /* if (index >= nodeSize)
         {
-            if (index >= nodeSize)
+            index = nodeSize - 1;
+        } */
+
+        MyNode *offset = headNode;
+        for (int i = 0; i < index; i++)
+        {
+            if (i == (index - 1))
             {
-                index = nodeSize - 1;
+                // GETTING THE ADDRESS OF THE NODE WHICH WE WILL CONNECT TO WHERE THE REMOVED NODE WAS
+                MyNode *successorNode = (*(*offset).next).next;
+
+                MyNode *temp = (*offset).next; // ADDRESS OF THE NODE TO BE REMOVED
+                delete temp;                   // I AM DOING THIS TO DEALLOCATE THE MEMORY OF THE REMOVED NODE, BUT I AM NOT SURE IF IT WORKS
+
+                (*offset).next = successorNode;
             }
-
-            MyNode *offset = headNode;
-            for (int i = 0; i < index; i++)
+            else
             {
-                if (i == (index - 1))
-                {
-                    // GETTING THE ADDRESS OF THE NODE WHICH WE WILL CONNECT TO WHERE THE REMOVED NODE WAS
-                    MyNode *successorNode = (*(*offset).next).next;
-
-                    MyNode *temp = (*offset).next; // ADDRESS OF THE NODE TO BE REMOVED
-                    delete temp;                   // I AM DOING THIS TO DEALLOCATE THE MEMORY OF THE REMOVED NODE, BUT I AM NOT SURE IF IT WORKS
-
-                    (*offset).next = successorNode;
-                }
-                else
-                {
-                    offset = (*offset).next;
-                }
+                offset = (*offset).next;
             }
         }
+        return true;
     }
 
-    void pop()
+    bool pop()
     {
-        removeAt(getNodeSize() - 1);
+        return removeAt(getNodeSize() - 1);
     }
 
-    void push(int value)
+    bool push(int value)
     {
-        insert(getNodeSize(), value);
+        return insert(getNodeSize(), value);
     }
 
     int get(int index)
     {
         int nodeSize = getNodeSize();
-        if (index >= nodeSize)
+        if (nodeSize == 0 || index >= nodeSize || index < 0)
+        {
+            return NULL;
+        }
+        /* if (index >= nodeSize)
         {
             index = nodeSize - 1;
-        }
+        } */
 
         MyNode *offset = headNode;
         for (int i = 0; i < index; i++)
@@ -200,6 +209,11 @@ public:
 
     int first()
     {
-        return get(0);
+        if (headNode == NULL)
+        {
+            return NULL;
+        }
+        return (*headNode).value;
+        // return get(0);
     }
 };
