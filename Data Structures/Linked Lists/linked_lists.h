@@ -3,10 +3,11 @@
 
 using namespace std;
 
+template <class U>
 class LinkedList
 {
 private:
-    MyNode *headNode = NULL;
+    MyNode<U> *headNode = NULL;
 
 public:
     LinkedList() {}
@@ -36,7 +37,7 @@ public:
         {
             return 0;
         }
-        MyNode *head = headNode;
+        MyNode<U> *head = headNode;
         int cnt = 1;
         while ((*head).next != NULL)
         {
@@ -46,9 +47,9 @@ public:
         return cnt;
     }
 
-    bool insert(int index, int value)
+    bool insert(int index, U value)
     {
-        MyNode *node = new MyNode(value);
+        MyNode<U> *node = new MyNode(value);
         int nodeSize = getNodeSize();
         if (index > nodeSize || index < 0)
         {
@@ -78,7 +79,7 @@ public:
 
             return true;
         }
-        MyNode *offset = headNode;
+        MyNode<U> *offset = headNode;
         for (int i = 0; i < index; i++)
         {
             if (i == (index - 1))
@@ -103,10 +104,10 @@ public:
         }
         if (index == 0)
         {
-            MyNode *newFirst = (*headNode).next;
+            MyNode<U> *newFirst = (*headNode).next;
 
-            MyNode *temp = headNode;
-            delete temp; // I AM DOING THIS TO DEALLOCATE THE MEMORY OF THE REMOVED NODE, BUT I AM NOT SURE IF IT WORKS
+            //MyNode<U> *temp = headNode;
+            //delete temp; // I AM DOING THIS TO DEALLOCATE THE MEMORY OF THE REMOVED NODE, BUT I AM NOT SURE IF IT WORKS
 
             headNode = newFirst;
 
@@ -117,16 +118,16 @@ public:
             index = nodeSize - 1;
         } */
 
-        MyNode *offset = headNode;
+        MyNode<U> *offset = headNode;
         for (int i = 0; i < index; i++)
         {
             if (i == (index - 1))
             {
                 // GETTING THE ADDRESS OF THE NODE WHICH WE WILL CONNECT TO WHERE THE REMOVED NODE WAS
-                MyNode *successorNode = (*(*offset).next).next;
+                MyNode<U> *successorNode = (*(*offset).next).next;
 
-                MyNode *temp = (*offset).next; // ADDRESS OF THE NODE TO BE REMOVED
-                delete temp;                   // I AM DOING THIS TO DEALLOCATE THE MEMORY OF THE REMOVED NODE, BUT I AM NOT SURE IF IT WORKS
+                MyNode<U> *temp = (*offset).next; // ADDRESS OF THE NODE TO BE REMOVED
+                delete temp;                      // I AM DOING THIS TO DEALLOCATE THE MEMORY OF THE REMOVED NODE, BUT I AM NOT SURE IF IT WORKS
 
                 (*offset).next = successorNode;
             }
@@ -143,12 +144,12 @@ public:
         return removeAt(getNodeSize() - 1);
     }
 
-    bool push(int value)
+    bool push(U value)
     {
         return insert(getNodeSize(), value);
     }
 
-    int get(int index)
+    U get(int index)
     {
         int nodeSize = getNodeSize();
         if (nodeSize == 0 || index >= nodeSize || index < 0)
@@ -160,7 +161,7 @@ public:
             index = nodeSize - 1;
         } */
 
-        MyNode *offset = headNode;
+        MyNode<U> *offset = headNode;
         for (int i = 0; i < index; i++)
         {
             offset = (*offset).next;
@@ -168,10 +169,10 @@ public:
         return (*offset).value;
     }
 
-    int indexOf(int value)
+    int indexOf(U value)
     {
         int nodeSize = getNodeSize();
-        MyNode *offset = headNode;
+        MyNode<U> *offset = headNode;
 
         for (int i = 0; i < nodeSize - 1; i++)
         {
@@ -185,10 +186,10 @@ public:
         return -1;
     }
 
-    bool contains(int value)
+    bool contains(U value)
     {
         int nodeSize = getNodeSize();
-        MyNode *offset = headNode;
+        MyNode<U> *offset = headNode;
 
         for (int i = 0; i < nodeSize - 1; i++)
         {
@@ -202,12 +203,12 @@ public:
         return false;
     }
 
-    int last()
+    U last()
     {
         return get((getNodeSize() - 1));
     }
 
-    int first()
+    U first()
     {
         if (headNode == NULL)
         {

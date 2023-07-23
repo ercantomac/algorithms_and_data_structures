@@ -26,5 +26,18 @@ int main()
     cout << "Does tree contain the number 8? " << (myTree.contains(8) ? "TRUE" : "FALSE") << endl;
     cout << "Does tree contain the number 10? " << (myTree.contains(10) ? "TRUE" : "FALSE") << endl;
     cout << "Does tree contain the number -6? " << (myTree.contains(-6) ? "TRUE" : "FALSE") << endl;
-    cout << "Does tree contain the number 4? " << (myTree.contains(4) ? "TRUE" : "FALSE") << endl;
+    cout << "Does tree contain the number 4? " << (myTree.contains(4) ? "TRUE" : "FALSE") << endl
+         << endl;
+
+    myTree.draw();
+    cout << endl;
+
+    bool a = myTree.deleteElement(4);
+    cout << "Delete 4: " << a << endl
+         << endl;
+    cout << "Does tree contain the number 4? " << (myTree.contains(4) ? "TRUE" : "FALSE") << endl
+         << endl;
+    myTree.printAll();
+
+    return 0;
 }
